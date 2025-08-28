@@ -774,6 +774,8 @@ const restaurants = [
 
 // your code here
 const modal = document.querySelector('#modal');
+const modalContent = document.querySelector('#modal-content');
+const closeButtons = document.querySelectorAll('.close-button');
 
 function highlight(evt) {
   document.querySelector('.highlight')?.classList.remove('highlight');
@@ -781,19 +783,25 @@ function highlight(evt) {
 }
 
 function openModal(restaurant) {
-  console.log('openModal');
   modal.showModal();
-  modal.innerHTML = '';
+  modalContent.innerHTML = '';
   const html = `
     <h3>${restaurant.name}</h3>
     <address>
       ${restaurant.address}<br>
-      postinumero kaupunki <br>
-      puhelin <br>
-      Firma
+      ${restaurant.postalCode} ${restaurant.city} <br>
+      ${restaurant.phone} <br>
+      ${restaurant.company}
     </address>
   `;
-  modal.insertAdjacentHTML('beforeend', html);
+  modalContent.insertAdjacentHTML('beforeend', html);
+}
+
+// modaalien sulkeminen
+for (const closeButton of closeButtons) {
+  closeButton.addEventListener('click', function (evt) {
+    evt.currentTarget.parentElement.parentElement.close();
+  });
 }
 
 restaurants.sort(function (a, b) {
