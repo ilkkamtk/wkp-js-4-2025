@@ -773,12 +773,42 @@ const restaurants = [
 ];
 
 // your code here
+const modal = document.querySelector('#modal');
+
+function highlight(evt) {
+  document.querySelector('.highlight')?.classList.remove('highlight');
+  evt.currentTarget.classList.add('highlight');
+}
+
+function openModal(restaurant) {
+  console.log('openModal');
+  modal.showModal();
+  modal.innerHTML = '';
+  const html = `
+    <h3>${restaurant.name}</h3>
+    <address>
+      ${restaurant.address}<br>
+      postinumero kaupunki <br>
+      puhelin <br>
+      Firma
+    </address>
+  `;
+  modal.insertAdjacentHTML('beforeend', html);
+}
+
+restaurants.sort(function (a, b) {
+  if (a.name.toUpperCase() > b.name.toUpperCase()) {
+    return 1;
+  } else {
+    return -1;
+  }
+});
 
 for (const restaurant of restaurants) {
   const rivi = document.createElement('tr');
+  rivi.addEventListener('click', highlight);
   rivi.addEventListener('click', function () {
-    document.querySelector('.highlight')?.classList.remove('highlight');
-    rivi.classList.add('highlight');
+    openModal(restaurant);
   });
 
   const nimiSolu = document.createElement('td');
